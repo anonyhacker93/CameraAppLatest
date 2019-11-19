@@ -1,4 +1,4 @@
-package com.example.cameraapp;
+package com.example.cameraapp.manager;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -6,11 +6,13 @@ import android.graphics.BitmapFactory;
 import android.media.Image;
 import android.os.Environment;
 
+import com.example.cameraapp.util.Utility;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
-import static com.example.cameraapp.FileManager.deleteBitmap;
+import static com.example.cameraapp.manager.FileManager.deleteBitmap;
 
 public class CameraPhotoManager {
     private static final String SAVE_DIRECTORY = Environment.DIRECTORY_PICTURES;
@@ -42,6 +44,11 @@ public class CameraPhotoManager {
     private static String createPhotoName() {
         return PHOTO_PREFIX + Utility.getDateTime() + PHOTO_EXTENSION;
     }
+
+    public void photoScanChange(Context context) {
+        FileManager.scanChanges(context, SAVE_DIRECTORY, currentPhotoName);
+    }
+
 
     public boolean deletePhoto() {
         return deleteBitmap(SAVE_DIRECTORY, currentPhotoName);

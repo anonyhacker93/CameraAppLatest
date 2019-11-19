@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">CameraApp</string>
     <string name="photo_save">Photo saved</string>
+    <string name="photo_saving">Photo saving...</string>
     <string name="photo_not_saved">Unable to save photo</string>
+    <string name="previewTitle">Preview</string>
+    <string name="photo_delete">Photo Deleted</string>
+    <string name="unable_delete_photo">Unable to delete photo</string>
+    <string name="captureTitle">Capture</string>
+    <string name="declinePermissionMsg">Sorry!, you can\'t use this app without granting permission</string>
 </resources>

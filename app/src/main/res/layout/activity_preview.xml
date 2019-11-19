@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreviewActivity">
+    tools:context=".view.PreviewActivity">
 
     <ImageView
         android:id="@+id/imagePreview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ImageView>
+        android:layout_height="match_parent"
+        ></ImageView>
 </androidx.constraintlayout.widget.ConstraintLayout>

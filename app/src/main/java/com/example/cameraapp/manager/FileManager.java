@@ -1,8 +1,10 @@
-package com.example.cameraapp;
+package com.example.cameraapp.manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Environment;
 
 import java.io.File;
@@ -14,10 +16,8 @@ import java.nio.ByteBuffer;
 
 public class FileManager {
 
-    public static boolean saveBitmap(Bitmap bitmap, String path, String name) {
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        dir = dir + "/" + path;
-        File file = new File(dir, name);
+    public static boolean saveBitmap(Bitmap bitmap, String dir, String name) {
+        File file = new File(createPath(dir), name);
         try {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, new FileOutputStream(file));
             return true;
@@ -27,17 +27,14 @@ public class FileManager {
         return false;
     }
 
-    public static boolean deleteBitmap(String path, String name) {
-        String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        dir = dir + "/" + path;
-        File file = new File(dir, name);
+    public static boolean deleteBitmap(String dir, String name) {
+        File file = new File(createPath(dir), name);
         return file.delete();
     }
 
     static public class AppDataFileManager {
         public File getFile(Context context, String fileName) {
             File file;
-            Bitmap myBitmap = null;
             if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
                 file = new File(context.getExternalFilesDir(null), fileName);
             } else {
@@ -69,5 +66,16 @@ public class FileManager {
         }
     }
 
+    public static void scanChanges(Context context, String dir, String scanFileName) {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        Uri contentUri = Uri.fromFile(new File(createPath(dir) + "/" + scanFileName));
+        mediaScanIntent.setData(contentUri);
+        context.sendBroadcast(mediaScanIntent);
+    }
 
+    private static String createPath(String dirName) {
+        String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        dirPath = dirPath + "/" + dirName;
+        return dirPath;
+    }
 }

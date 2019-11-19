@@ -1,4 +1,4 @@
-package com.example.cameraapp;
+package com.example.cameraapp.util;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -7,7 +7,7 @@ import android.content.Intent;
 
 import androidx.core.app.NotificationCompat;
 
-class NotificationUtil {
+public class NotificationBuilder {
 
     public void createNotification(Context context, Class targetClass, String title, String content, int icon) {
         NotificationCompat.Builder builder =
