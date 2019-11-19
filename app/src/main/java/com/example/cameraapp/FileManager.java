@@ -34,7 +34,7 @@ public class FileManager {
         return file.delete();
     }
 
-   static public class AppDataFileManager {
+    static public class AppDataFileManager {
         public File getFile(Context context, String fileName) {
             File file;
             Bitmap myBitmap = null;

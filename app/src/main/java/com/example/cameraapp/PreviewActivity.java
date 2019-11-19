@@ -14,20 +14,20 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class PreviewActivity extends AppCompatActivity {
     private ImageView mPreviewImageView;
-
+    private CameraPhotoManager photoManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
-
+        photoManager = new CameraPhotoManager();
         setTitle("Preview");
         mPreviewImageView = findViewById(R.id.imagePreview);
         previewPhoto();
     }
 
     private void previewPhoto() {
-        Bitmap bitmap = FileUtil.fetchInAppBitmap(PreviewActivity.this);
+        Bitmap bitmap = CameraPhotoManager.getTempBitmap(this);
         if (bitmap != null) {
             mPreviewImageView.setImageBitmap(bitmap);
         }
@@ -45,6 +45,7 @@ public class PreviewActivity extends AppCompatActivity {
         switch ((item.getItemId())) {
             case R.id.save_photo:
                 new SaveAsyncTask().execute(((BitmapDrawable) mPreviewImageView.getDrawable()).getBitmap());
+
                 break;
             case R.id.delete_photo:
                 finish();
@@ -57,7 +58,7 @@ public class PreviewActivity extends AppCompatActivity {
     class SaveAsyncTask extends AsyncTask<Bitmap, Void, Boolean> {
         @Override
         protected Boolean doInBackground(Bitmap... bitmaps) {
-            return FileUtil.saveBitmap(bitmaps[0]);
+            return photoManager.savePhoto(bitmaps[0]);
         }
 
         @Override

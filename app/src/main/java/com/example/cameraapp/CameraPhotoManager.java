@@ -30,7 +30,7 @@ public class CameraPhotoManager {
         return bitmap;
     }
 
-    public static boolean savePhoto(Bitmap bitmap) {
+    public boolean savePhoto(Bitmap bitmap) {
         return FileManager.saveBitmap(bitmap, SAVE_DIRECTORY, createPhotoName());
     }
 

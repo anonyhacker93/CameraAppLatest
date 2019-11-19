@@ -185,38 +185,9 @@ public class CaptureActivity extends AppCompatActivity {
                 @Override
                 public void onImageAvailable(ImageReader reader) {
                     Image image = reader.acquireLatestImage();
-                    FileUtil.saveInApp(getBaseContext(),image);
+                    CameraPhotoManager.saveTempBitmap(getBaseContext(), image);
                     Intent intent = new Intent(CaptureActivity.this, PreviewActivity.class);
                     CaptureActivity.this.startActivity(intent);
-
-
-                   /* try {
-
-                                             ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                        byte[] bytes = new byte[buffer.capacity()];
-                        buffer.get(bytes);
-                        saveBitmap(bytes);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (image != null) {
-                            image.close();
-                        }
-                    }*/
-                }
-
-                private void save(byte[] bytes) throws IOException {
-                    OutputStream output = null;
-                    try {
-                        output = new FileOutputStream(file);
-                        output.write(bytes);
-                    } finally {
-                        if (null != output) {
-                            output.close();
-                        }
-                    }
                 }
             };
             reader.setOnImageAvailableListener(readerListener, mBackgroundHandler);
