@@ -15,6 +15,9 @@ import static com.example.cameraapp.FileManager.deleteBitmap;
 public class CameraPhotoManager {
     private static final String SAVE_DIRECTORY = Environment.DIRECTORY_PICTURES;
     private static final String TEMP_BITMAP_FILE = "TempPic.jpg";
+    private static final String PHOTO_PREFIX = "Photo_";
+    private static final String PHOTO_EXTENSION = ".jpg";
+    private String currentPhotoName = "";
 
     public static void saveTempBitmap(Context context, Image image) {
         new FileManager.AppDataFileManager().saveFile(context, image, TEMP_BITMAP_FILE);
@@ -31,17 +34,17 @@ public class CameraPhotoManager {
     }
 
     public boolean savePhoto(Bitmap bitmap) {
-        return FileManager.saveBitmap(bitmap, SAVE_DIRECTORY, createPhotoName());
+        currentPhotoName = createPhotoName();
+        return FileManager.saveBitmap(bitmap, SAVE_DIRECTORY, currentPhotoName);
     }
 
     @NotNull
     private static String createPhotoName() {
-        return "Photo_" + Utility.getDateTime() + ".jpg";
+        return PHOTO_PREFIX + Utility.getDateTime() + PHOTO_EXTENSION;
     }
 
-    private boolean deletePhoto(String filePath, String name) {
-        return deleteBitmap(filePath, name);
-
+    public boolean deletePhoto() {
+        return deleteBitmap(SAVE_DIRECTORY, currentPhotoName);
     }
 }
 

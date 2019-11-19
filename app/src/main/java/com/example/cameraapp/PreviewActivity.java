@@ -1,9 +1,12 @@
 package com.example.cameraapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -48,8 +51,14 @@ public class PreviewActivity extends AppCompatActivity {
 
                 break;
             case R.id.delete_photo:
-                finish();
-                Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                if (photoManager.deletePhoto()) {
+                    Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, "Unable to deleted", Toast.LENGTH_SHORT).show();
+                }
+
+
         }
 
         return true;
@@ -69,6 +78,7 @@ public class PreviewActivity extends AppCompatActivity {
             } else {
                 notifyMsg = getString(R.string.photo_not_saved);
             }
+         //   sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
             new NotificationUtil().createNotification(getBaseContext(), null, notifyMsg, "", R.drawable.ic_info_outline_black_24dp);
         }
     }
