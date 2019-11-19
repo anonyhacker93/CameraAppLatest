@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CameraApp</string>
+    <string name="photo_save">Photo saved</string>
+    <string name="photo_not_saved">Unable to save photo</string>
+</resources>
